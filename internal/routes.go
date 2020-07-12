@@ -30,15 +30,7 @@ func Routes(port string) *gin.Engine {
 
 	r.POST("/login", AuthMiddleware.LoginHandler)
 
-	//sistema usuarios
-	r.GET("/users", handlers.FindUsers)
-	r.POST("/users", handlers.CreateUser)
-	r.GET("/users/:id", handlers.FindUser)
-	r.PATCH("/users/:id", handlers.UpdateUser)
-	r.DELETE("/users/:id", handlers.DeleteUser)
 
-	// Refresh time can be longer than token timeout
-	r.GET("/refresh_token", AuthMiddleware.RefreshHandler)
 
 	auth := r.Group("/api")
 	// Refresh time can be longer than token timeout
@@ -47,6 +39,13 @@ func Routes(port string) *gin.Engine {
 	auth.Use(AuthMiddleware.MiddlewareFunc())
 	{
 		auth.GET("/hello", HelloHandler)
+
+		//sistema usuarios
+		auth.GET("/users", handlers.FindUsers)
+		r.POST("/users", handlers.CreateUser)
+		auth.GET("/users/:id", handlers.FindUser)
+		auth.PATCH("/users/:id", handlers.UpdateUser)
+		auth.DELETE("/users/:id", handlers.DeleteUser)
 
 	}
 

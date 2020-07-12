@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/postgres"
-
+	usuarios "github.com/valianx/videos/internal/domain/models/usuario"
 )
 
 type DBdata struct {
@@ -28,11 +28,11 @@ const (
 func ConnectDataBaseProduction() {
 
 	prod := DBdata{
-		Host:     "ec2-35-172-73-125.compute-1.amazonaws.com",
+		Host:     "ec2-54-211-210-149.compute-1.amazonaws.com",
 		Port:     5432,
-		User:     "zxaesyjblfuogt",
-		Password: "bf80be2a90e6e9a676451b507fd8b7df8349f2c094527b6da9d9baf7873f7549",
-		DBname:   "d8764sj6q4a3pu",
+		User:     "udezkmvezvjrjp",
+		Password: "b94c54f9b109d00eb05c161bd50b6499c02bffdad640e4f806cd47bd0b40f814",
+		DBname:   "d1q9kfaqcvk40b",
 	}
 
 	connect := fmt.Sprintf("host=%s port=%d user=%s "+
@@ -45,7 +45,24 @@ func ConnectDataBaseProduction() {
 		fmt.Println(err)
 		panic("Failed to connect to database!")
 	}
-	//migrar(database)
+	migrar(database)
 	DB = foreingKey(database)
 }
+func Drop() {
+	connect := fmt.Sprintf("host=%s port=%d user=%s "+
+		"password=%s dbname=%s sslmode=disable",
+		host, port, user, password, dbname)
+	database, err := gorm.Open("postgres", connect)
 
+	if err != nil {
+		panic("Failed to connect to database!")
+	}
+
+	database.DropTable(&usuarios.User{})
+
+}
+
+func migrar(database *gorm.DB) {
+	database.AutoMigrate(&usuarios.User{})
+
+}

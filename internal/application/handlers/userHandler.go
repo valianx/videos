@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"fmt"
 	"github.com/gin-gonic/gin"
 	_ "github.com/swaggo/swag/example/celler/httputil"
 	"github.com/valianx/videos/config"
@@ -11,18 +12,6 @@ import (
 	"time"
 )
 
-// Mostrar Users godoc
-// @tags CRUD users
-// @Summary Mostrar todos los users
-// @Description Muestra todos los users que pueden tener los usuarios
-// @Accept  json
-// @Produce  json
-// @Success 200 {object} usuarios.User
-// @Header 200 {string} Token "qwerty"
-// @Failure 400 {object} httputil.HTTPError
-// @Failure 404 {object} httputil.HTTPError
-// @Failure 500 {object} httputil.HTTPError
-// @Router /users [get]
 func FindUsers(c *gin.Context) {
 	var users []usuarios.User
 	config.DB.Find(&users)
@@ -30,20 +19,6 @@ func FindUsers(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": users})
 }
 
-// Crear Users godoc
-// @ID post-user
-// @tags CRUD users
-// @Summary Crear nuevo user
-// @Description Crea un nuevo user para los usuarios
-// @Accept  json
-// @Produce  json
-// @Param User body usuarios.CreateUserInput true "Modelo user"
-// @Success 200 {object} usuarios.User
-// @Header 200 {string} Token "qwerty"
-// @Failure 400 {object} httputil.HTTPError
-// @Failure 404 {object} httputil.HTTPError
-// @Failure 500 {object} httputil.HTTPError
-// @Router /users [post]
 func CreateUser(c *gin.Context) {
 	input := usuarios.CreateUserInput{}
 	if err := c.ShouldBindJSON(&input); err != nil {
@@ -67,20 +42,6 @@ func CreateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }
 
-// Mostrar Users godoc
-// @ID get-user
-// @tags CRUD users
-// @Summary Muestra un user
-// @Description Con su id se muestra un user seleccionado
-// @Accept  json
-// @Produce  json
-// @Param id path int true "user"
-// @Success 200 {object} usuarios.User
-// @Header 200 {string} Token "qwerty"
-// @Failure 400 {object} httputil.HTTPError
-// @Failure 404 {object} httputil.HTTPError
-// @Failure 500 {object} httputil.HTTPError
-// @Router /users/{id} [get]
 func FindUser(c *gin.Context) { // Get model if exist
 	var user usuarios.User
 
@@ -92,19 +53,6 @@ func FindUser(c *gin.Context) { // Get model if exist
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }
 
-// @tags CRUD users
-// @Summary editar user
-// @Description Edita un user con su id
-// @ID patch-user
-// @Accept  json
-// @Produce  json
-// @Param id path int true "user"
-// @Param User body usuarios.UpdateUserInput true "Modelo user"
-// @Header 200 {string} Token "qwerty"
-// @Failure 400 {object} httputil.HTTPError
-// @Failure 404 {object} httputil.HTTPError
-// @Failure 500 {object} httputil.HTTPError
-// @Router /users/{id} [patch]
 func UpdateUser(c *gin.Context) {
 	// Get model if exist
 	var user usuarios.User
@@ -125,23 +73,11 @@ func UpdateUser(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": user})
 }
 
-// @tags CRUD users
-// @Summary Eliminar user
-// @Description Elimina un user con su id
-// @ID delete-user
-// @Accept  json
-// @Produce  json
-// @Param id path int true "User"
-// @Success 200 {object} usuarios.User
-// @Header 200 {string} Token "qwerty"
-// @Failure 400 {object} httputil.HTTPError
-// @Failure 404 {object} httputil.HTTPError
-// @Failure 500 {object} httputil.HTTPError
-// @Router /users/{id} [delete]
 func DeleteUser(c *gin.Context) {
 	// Get model if exist
 	var user usuarios.User
 	if err := config.DB.Where("id = ?", c.Param("id")).First(&user).Error; err != nil {
+		fmt.Println(err)
 		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 		return
 	}

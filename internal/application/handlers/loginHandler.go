@@ -8,8 +8,8 @@ import (
 	"github.com/valianx/videos/utils"
 )
 
-type login struct {
-	Nombre   string `form:"nombre" json:"nombre" binding:"required"`
+type Login struct {
+	Email   string `form:"nombre" json:"nombre" binding:"required"`
 	Password string `form:"password" json:"password" binding:"required"`
 }
 

@@ -120,7 +120,6 @@ func TestUsersGetIDRoute(t *testing.T) {
 }
 
 //patch test
-
 func TestUserPATCHRoute(t *testing.T) {
 	ts := httptest.NewServer(setupServer())
 
@@ -155,6 +154,7 @@ func TestUserPATCHRoute(t *testing.T) {
 		t.Fatalf("Expected \"application/json; charset=utf-8\", got %s", val[0])
 	}
 }
+
 /*
 func TestLoginRoute(t *testing.T) {
 	ts := httptest.NewServer(setupServer())
@@ -185,7 +185,7 @@ func TestLoginRoute(t *testing.T) {
 		t.Fatalf("Expected \"application/json; charset=utf-8\", got %s", val[0])
 	}
 }
- */
+*/
 
 func TestUsuariosDELETERoute(t *testing.T) {
 	ts := httptest.NewServer(setupServer())
