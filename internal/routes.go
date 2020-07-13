@@ -23,6 +23,9 @@ func Routes(port string) *gin.Engine {
 	fmt.Printf("connect to port %s\n", port)
 
 	r := gin.New()
+	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
+	r.Use(cors.New(config))
 	r.Use(gin.Logger())
 	r.Use(gin.Recovery())
 
@@ -50,9 +53,7 @@ func Routes(port string) *gin.Engine {
 	if err := http.ListenAndServe(":"+port, r); err != nil {
 		log.Fatal(err)
 	}
-	config := cors.DefaultConfig()
-	config.AllowAllOrigins = true
-	r.Use(cors.New(config))
+
 
 	return r
 }
