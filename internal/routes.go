@@ -50,6 +50,7 @@ func Routes(port string) *gin.Engine {
 	if err := http.ListenAndServe(":"+port, r); err != nil {
 		log.Fatal(err)
 	}
-	r.Use(cors.Default())
+	config := cors.DefaultConfig()
+	r.Use(cors.New(config))
 	return r
 }
