@@ -28,11 +28,11 @@ const (
 func ConnectDataBaseProduction() {
 
 	prod := DBdata{
-		Host:     "ec2-54-211-210-149.compute-1.amazonaws.com",
+		Host:     "ec2-34-192-173-173.compute-1.amazonaws.com",
 		Port:     5432,
-		User:     "udezkmvezvjrjp",
-		Password: "b94c54f9b109d00eb05c161bd50b6499c02bffdad640e4f806cd47bd0b40f814",
-		DBname:   "d1q9kfaqcvk40b",
+		User:     "ccelasmvjghjbs",
+		Password: "292613e08d151653726dea15e5c4ba5456fbe3ab5daf3cc4e31aec96b84d70ad",
+		DBname:   "d3flef4iovci",
 	}
 
 	connect := fmt.Sprintf("host=%s port=%d user=%s "+
@@ -45,7 +45,7 @@ func ConnectDataBaseProduction() {
 		fmt.Println(err)
 		panic("Failed to connect to database!")
 	}
-	migrar(database)
+	 migrar(database)
 	DB = foreingKey(database)
 }
 func Drop() {

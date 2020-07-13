@@ -30,8 +30,6 @@ func Routes(port string) *gin.Engine {
 
 	r.POST("/login", AuthMiddleware.LoginHandler)
 
-
-
 	auth := r.Group("/api")
 	// Refresh time can be longer than token timeout
 	auth.GET("/refresh_token", AuthMiddleware.RefreshHandler)
@@ -46,7 +44,6 @@ func Routes(port string) *gin.Engine {
 		auth.GET("/users/:id", handlers.FindUser)
 		auth.PATCH("/users/:id", handlers.UpdateUser)
 		auth.DELETE("/users/:id", handlers.DeleteUser)
-
 	}
 
 	if err := http.ListenAndServe(":"+port, r); err != nil {
