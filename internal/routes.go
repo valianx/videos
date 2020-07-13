@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+	"github.com/gin-contrib/cors"
 	"github.com/gin-contrib/static"
 	"github.com/gin-gonic/gin"
 	"github.com/valianx/videos/internal/application/handlers"
@@ -49,6 +50,6 @@ func Routes(port string) *gin.Engine {
 	if err := http.ListenAndServe(":"+port, r); err != nil {
 		log.Fatal(err)
 	}
-
+	r.Use(cors.Default())
 	return r
 }
