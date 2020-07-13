@@ -51,6 +51,8 @@ func Routes(port string) *gin.Engine {
 		log.Fatal(err)
 	}
 	config := cors.DefaultConfig()
+	config.AllowAllOrigins = true
 	r.Use(cors.New(config))
+
 	return r
 }
